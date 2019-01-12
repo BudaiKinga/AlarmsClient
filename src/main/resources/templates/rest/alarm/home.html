@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Index page</title>
+</head>
+<body>
+<h1 align="center">Welcome <span th:text="${user}">user</span></h1>
+
+<h2 align="center">Your alarms:</h2>
+<table border="1" style="width:300px" align="center">
+    <tr>
+        <th align="center">Symbol</th>
+        <th align="center">Lower than</th>
+        <th align="center">Greater than</th>
+    </tr>
+    <tr th:each="alarm : ${alarms}">
+        <td th:text="${alarm.symbol}">NBCS</td>
+        <td th:text="${alarm.lower}">15</td>
+        <td th:text="${alarm.upper}">20</td>
+    </tr>
+</table>
+
+<h2 align="center">Your stocks to be monitored:</h2>
+
+<p th:text="${user}">Username</p>
+<a th:href="@{/login}">Log In</a>
+
+<form th:action="@{/logout}" method="post" align="right">
+    <button type="submit" value="logout">Log Out</button>
+</form>
+</body>
+</html>
