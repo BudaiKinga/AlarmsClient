@@ -21,8 +21,8 @@ public class AlarmDAO {
         return alarmRepo.findAll();
     }
 
-    public Alarm findOne(Integer alarmId) {
-        return alarmRepo.getOne(alarmId);
+    public Alarm findById(int alarmId) {
+        return alarmRepo.findById(alarmId).get();
     }
 
     public void delete(Alarm alarm) {
@@ -31,5 +31,9 @@ public class AlarmDAO {
 
     public List<Alarm> findAllByUserId(int userId) {
         return alarmRepo.findAllByUserId(userId);
+    }
+
+    public void delete(int id) {
+        alarmRepo.deleteById(id);
     }
 }

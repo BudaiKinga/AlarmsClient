@@ -7,21 +7,63 @@
 <body>
 <h1 align="center">Welcome <span th:text="${user}">user</span></h1>
 
-<h2 align="center">Your alarms:</h2>
-<table border="1" style="width:300px" align="center">
+
+<h2 align="center">Monitored stocks:</h2>
+<table border="1" align="center">
     <tr>
         <th align="center">Symbol</th>
-        <th align="center">Lower than</th>
-        <th align="center">Greater than</th>
+        <th align="center">Price Type</th>
+        <th align="center">Initial price</th>
+        <th align="center">Current price</th>
+        <th align="center">Current variance(%)</th>
+        <th align="center">Target variance (%)</th>
+        <th align="center">Alarm name</th>
+        <th align="center">Active</th>
+    </tr>
+    <tr th:each="msd : ${stocks}">
+        <td align="center" th:text="${msd.getSymbol()}">name</td>
+        <td align="center" th:text="${msd.getPriceType()}">HIGH</td>
+        <td align="right" th:text="${msd.getInitialPrice()}">0.0</td>
+        <td align="right" th:text="${msd.getCurrentPrice()}">0.0</td>
+        <td align="right" th:text="${msd.getCurrentVariance()}">0.0</td>
+        <td align="right" th:text="${msd.getTargetVariance()}">0.0</td>
+        <td align="center" th:text="${msd.getAlarmName()}">0.0</td>
+        <td align="center" th:text="${msd.isActive()}">true</td>
+    </tr>
+</table>
+<br/>
+<br/>
+<h2 align="center">Your alarms:</h2>
+<table border="1" align="center">
+    <tr>
+        <th align="center">Name</th>
+        <th align="center">Created</th>
+        <th align="center">Symbol</th>
+        <th align="center">Reference price</th>
+        <th align="center">Target %</th>
+        <th align="center">Price type</th>
+        <th align="center">Edit</th>
+        <th align="center">Remove</th>
     </tr>
     <tr th:each="alarm : ${alarms}">
+        <td th:text="${alarm.name}">name</td>
+        <td th:text="${alarm.creationTime}">20</td>
         <td th:text="${alarm.symbol}">NBCS</td>
-        <td th:text="${alarm.lower}">15</td>
-        <td th:text="${alarm.upper}">20</td>
+        <td th:text="${alarm.referencePrice}">NBCS</td>
+        <td th:text="${alarm.targetPercentage}">15</td>
+        <td th:text="${alarm.priceType}">15</td>
+        <td> <form method="POST" th:action="@{edit/{id}(id=${alarm.id})}">
+            <button type="submit" name="submit" value="value" class="link-button">Edit</button>
+        </form></td>
+        <td><a th:href="@{delete/{id}(id=${alarm.id})}">Delete</a></td>
     </tr>
 </table>
 
-<h2 align="center">Your stocks to be monitored:</h2>
+
+
+<form th:action="@{/createAlarm}" method="post" align="right">
+    <button type="submit">Create new Alarm</button>
+</form>
 
 <p th:text="${user}">Username</p>
 <a th:href="@{/login}">Log In</a>

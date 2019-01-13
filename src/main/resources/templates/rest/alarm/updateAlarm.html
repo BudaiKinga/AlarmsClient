@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Index page</title>
+</head>
+<body>
+<h1 align="center">Edit your alarm</h1>
+<form action="#" th:action="@{/edit}" th:object="${alarm}" method="post">
+    <div>
+        <label>Alarm name</label>
+        <input th:field="*{name}"/>
+    </div>
+    <div>
+        <input th:field="*{id}" th:value="*{id}" readonly hidden/>
+    </div>
+    <div>
+        <input th:field="*{creationTime}" th:value="*{creationTime}" readonly hidden/>
+    </div>
+    <div>
+        <label>Symbol</label>
+        <select th:field="*{symbol}">
+            <option th:each="i : ${codes}" th:text="${i}" th:value="${i}">
+            </option>
+        </select>
+    </div>
+    <div>
+        <label>Target percentage:</label>
+        <input th:field="*{targetPercentage}"/>
+    </div>
+    <div>
+        <label>Price type</label>
+        <select th:field="*{priceType}">
+            <option th:each="i : ${priceTypes}" th:text="${i}" th:value="${i}">
+            </option>
+        </select>
+    </div>
+    <div>
+        <input th:field="*{active}" th:value="*{active}" readonly hidden/>
+    </div>
+    <button type="submit" th:text="Save">Save</button>
+    <form th:action="@{/cancel}" method="post" align="right">
+        <button type="submit">Cancel</button>
+    </form>
+</form>
+
+
+<form th:action="@{/logout}" method="post" align="right">
+    <button type="submit" value="logout">Log Out</button>
+</form>
+</body>
+</html>

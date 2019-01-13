@@ -1,8 +1,10 @@
 package com.stocks.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Entity
 @Table(name = "alarm")
@@ -15,27 +17,43 @@ public class Alarm {
     @Column(name = "user_id")
     private int userId;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "creation_time")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private Date creationTime;
+
     @Column(name = "symbol")
     @NotEmpty
     private String symbol;
 
-    @Column(name = "lower")
-    @NotEmpty
-    private double lower;
+    @Column(name = "targetPercentage")
+    private double targetPercentage;
 
-    @Column(name = "upper")
-    @NotEmpty
-    private double upper;
+    @Column(name = "price_type")
+    private String priceType;
+
+    @Column(name = "active")
+    private boolean active;
+
+    @Column(name = "reference_price")
+    private double referencePrice;
+
 
     public Alarm() {
     }
 
-    public Alarm(int id, int userId, @NotEmpty String symbol, @NotEmpty double lower, @NotEmpty double upper) {
+    public Alarm(int id, int userId, String name, Date creationTime, @NotEmpty String symbol, double targetPercentage, String priceType, boolean active, double referencePrice) {
         this.id = id;
         this.userId = userId;
+        this.name = name;
+        this.creationTime = creationTime;
         this.symbol = symbol;
-        this.lower = lower;
-        this.upper = upper;
+        this.targetPercentage = targetPercentage;
+        this.priceType = priceType;
+        this.active = active;
+        this.referencePrice = referencePrice;
     }
 
     public int getId() {
@@ -54,6 +72,22 @@ public class Alarm {
         this.userId = userId;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(Date creationTime) {
+        this.creationTime = creationTime;
+    }
+
     public String getSymbol() {
         return symbol;
     }
@@ -62,19 +96,35 @@ public class Alarm {
         this.symbol = symbol;
     }
 
-    public double getLower() {
-        return lower;
+    public double getTargetPercentage() {
+        return targetPercentage;
     }
 
-    public void setLower(double lower) {
-        this.lower = lower;
+    public void setTargetPercentage(double targetPercentage) {
+        this.targetPercentage = targetPercentage;
     }
 
-    public double getUpper() {
-        return upper;
+    public String getPriceType() {
+        return priceType;
     }
 
-    public void setUpper(double upper) {
-        this.upper = upper;
+    public void setPriceType(String priceType) {
+        this.priceType = priceType;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public double getReferencePrice() {
+        return referencePrice;
+    }
+
+    public void setReferencePrice(double referencePrice) {
+        this.referencePrice = referencePrice;
     }
 }

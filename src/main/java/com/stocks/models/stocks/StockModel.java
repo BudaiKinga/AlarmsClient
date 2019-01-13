@@ -11,7 +11,7 @@ public class StockModel {
                     Code code = e.getKey();
                     StockPriceData updatedPriceData = e.getValue();
                     StockPriceData priceData = stocks.get(code);
-                    priceData.updatePrices(updatedPriceData.getUpdatedPrices(), updatedPriceData.getPriceData());
+                    priceData.updatePrices(updatedPriceData.getUpdatedPrices(), updatedPriceData.getPrice());
                 }
         );
     }

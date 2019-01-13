@@ -8,9 +8,9 @@
 <h1>Login Form</h1>
 <form th:action="@{/login}" th:object="${loginForm}" method="post">
     <label for="username">Username</label>
-    <input type="text" id="username" name="username" autofocus="autofocus"/>
+    <input type="text" id="username" value="kbudai" name="username" autofocus="autofocus"/>
     <label for="username">Password</label>
-    <input type="password" id="password" name="password"/>
+    <input type="password" id="password" value="123" name="password"/>
     <br/>
     <button type="submit" value="login"> Log In</button>
 </form>

@@ -1,9 +1,6 @@
 package com.stocks.models.stocks;
 
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class StockPriceData {
 
@@ -32,7 +29,8 @@ public class StockPriceData {
 
 
     public StockPriceData() {
-
+        priceData = new HashMap<>();
+        Arrays.stream(PriceType.values()).forEach(pt -> priceData.put(pt, -1d));
     }
 
     public StockPriceData(Code symbol, String date, Map<PriceType, Double> priceData) {
@@ -50,7 +48,7 @@ public class StockPriceData {
         return date;
     }
 
-    public Map<PriceType, Double> getPriceData() {
+    public Map<PriceType, Double> getPrice() {
         return priceData;
     }
 
@@ -64,6 +62,14 @@ public class StockPriceData {
         }
     }
 
+    public double getOpen() {
+        return getPrice(PriceType.OPEN_PRICE);
+    }
+
+    public double getPrice(PriceType priceType) {
+        return priceData.get(priceType);
+    }
+
     @Override
     public String toString() {
         return "StockPriceData{" +
@@ -73,4 +79,5 @@ public class StockPriceData {
                 ", updatedPrices=" + updatedPrices +
                 '}';
     }
+
 }

@@ -27,6 +27,7 @@ public class StockDataListener {
     }
 
     public void subscribe(Set<Code> codes) {
+        System.out.println("Sending to producer: " + codes);
         jmsTemplate.convertAndSend(subscriberSubject, codes);
 
     }

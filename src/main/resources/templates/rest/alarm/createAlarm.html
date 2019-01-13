@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Index page</title>
+</head>
+<body>
+<h1 align="center">Set up your alarm</h1>
+<form action="/saveAlarm" th:object="${alarm}" method="POST" enctype="utf8">
+    <div>
+        <label>Alarm name</label>
+        <input th:field="*{name}"/>
+    </div>
+    <div>
+        <label>Symbol</label>
+        <select th:field="*{symbol}">
+            <option th:each="i : ${codes}" th:text="${i}" th:value="${i}">
+            </option>
+        </select>
+    </div>
+    <div>
+        <label>Target percentage</label>
+        <input th:field="*{targetPercentage}"/>
+    </div>
+    <div>
+        <label>PriceType</label>
+        <select th:field="*{priceType}">
+            <option th:each="i : ${priceTypes}" th:text="${i}" th:value="${i}">
+            </option>
+        </select>
+    </div>
+    <button type="submit" th:text="create">submit</button>
+</form>
+
+
+<form th:action="@{/cancel}" method="post" align="right">
+    <button type="submit">Cancel</button>
+</form>
+</body>
+</html>
