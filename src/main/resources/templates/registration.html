@@ -3,40 +3,52 @@
 <body>
 <h1 th:text="Register">form</h1>
 <form action="/registerUser" th:object="${user}" method="POST" enctype="utf8">
-    <div>
-        <label th:text="First">first</label>
-        <input th:field="*{name}"/>
-        <p th:each="error: ${#fields.errors('name')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="Last">last</label>
-        <input th:field="*{lastName}"/>
-        <p th:each="error : ${#fields.errors('lastName')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="email">email</label>
-        <input type="email" th:field="*{email}"/>
-        <p th:each="error : ${#fields.errors('email')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="Username">userName</label>
-        <input th:field="*{userName}"/>
-        <p th:each="error : ${#fields.errors('userName')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="password">password</label>
-        <input type="password" th:field="*{password}"/>
-        <p th:each="error : ${#fields.errors('password')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="confirmPassword">confirm</label>
-        <input type="password" th:field="*{matchingPassword}"/>
-    </div>
+
+    <table>
+        <tr>
+            <td>First</td>
+            <td>
+                <input type="text" th:field="*{name}"/>
+            </td>
+            <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
+        </tr>
+        <tr>
+            <td>Last</td>
+            <td>
+                <input type="text" th:field="*{lastName}"/>
+            </td>
+            <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">LastName Error</td>
+        </tr>
+        <tr>
+            <td>E-mail</td>
+            <td>
+                <input type="email" th:field="*{email}"/>
+            </td>
+            <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</td>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td>
+                <input type="text" th:field="*{userName}"/>
+            </td>
+            <td th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">UserName Error</td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td>
+                <input type="password" th:field="*{password}"/>
+            </td>
+            <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</td>
+        </tr>
+        <tr>
+            <td>Confirm Password</td>
+            <td>
+                <input type="password" th:field="*{confirmPassword}"/>
+            </td>
+            <td th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.errors('global')}"
+                th:text="${error}">Validation error</p></td>
+        </tr>
+    </table>
     <button type="submit" th:text="Register">submit</button>
 </form>
 

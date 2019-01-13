@@ -1,13 +1,11 @@
 package com.stocks.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
+import com.stocks.models.validator.FieldMatch;
+
+import javax.persistence.*;
 import javax.validation.constraints.Size;
+
+@FieldMatch(first = "password", second = "confirmPassword", message = "passwords must match")
 
 @Entity
 @Table(name = "user")
@@ -19,22 +17,26 @@ public class User {
     private int id;
 
     @Column(name = "email")
+    @Size(min = 2, max = 15, message = "size must be between 2 and 15")
     private String email;
 
     @Column(name = "password")
-    @NotEmpty
+    @Size(min = 2, max = 15, message = "size must be between 2 and 15")
     private String password;
 
+    @Size(min = 2, max = 15, message = "size must be between 2 and 15")
+    private String confirmPassword;
+
     @Column(name = "name")
-    @NotEmpty
+    @Size(min = 2, max = 15, message = "size must be between 2 and 15")
     private String name;
 
     @Column(name = "last_name")
-    @NotEmpty
+    @Size(min = 2, max = 15, message = "size must be between 2 and 15")
     private String lastName;
 
     @Column(name = "user_name")
-    @Size(min = 2, max = 15)
+    @Size(min = 2, max = 15, message = "size must be between 2 and 15")
     private String userName;
 
     public User() {
@@ -70,6 +72,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public String getName() {
