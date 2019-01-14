@@ -10,6 +10,8 @@ import com.stocks.models.stocks.StockPriceData;
 import com.stocks.service.IStockDataMsgListener;
 import com.stocks.service.StockDataService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,8 +30,15 @@ import java.util.stream.Collectors;
 @Controller
 public class HomeResourcesController implements IStockDataMsgListener {
 
+    private static final String SUBJECT_ALARM = "Alarm %s has been reached target value on %s!";
+    private static final String TEXT_ALARM = "Alarm %s having target variance %.4f has been triggered.\n" +
+            "Initial price: %.4f\n" +
+            "Current price: %.4f";
     @Autowired
     private StockDataService stockDataService;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     @PreAuthorize("hasAnyRole('USER')")
     @RequestMapping(value = "rest/alarm/home", method = RequestMethod.GET)
@@ -82,7 +91,24 @@ public class HomeResourcesController implements IStockDataMsgListener {
         alarmsToDeactivate.forEach(alarm -> alarm.setActive(false));
         stockDataService.updateAlarms(alarmsToDeactivate);
         // new service to send email
+        sendNotificationOnMailForAlarms(targetReached);
         System.out.println("Monitored stocked data updated: " + msg);
+    }
+
+    private void sendNotificationOnMailForAlarms(List<MonitoredStockData> monitoredStockData) {
+        monitoredStockData.stream().forEach(msd -> {
+            mailSender.send(createMailMessage(msd));
+        });
+    }
+
+    private SimpleMailMessage createMailMessage(MonitoredStockData msd) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        int userId = msd.getAlarm().getUserId();
+        // get email for user
+        message.setTo("budai.kinga93@gmail.com");
+        message.setSubject(String.format(SUBJECT_ALARM, msd.getAlarm().getName(), msd.getSymbol()));
+        message.setText(String.format(TEXT_ALARM, msd.getAlarm().getName(), msd.getTargetVariance(), msd.getInitialPrice(), msd.getCurrentPrice()));
+        return message;
     }
 
     @Override
