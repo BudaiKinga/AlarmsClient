@@ -36,5 +36,6 @@ public enum Code {
     LASR,
     NMIH,
     NNBR,
-    NDLS
+    NDLS,
+    MSFT
 }

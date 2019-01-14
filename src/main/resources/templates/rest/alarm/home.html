@@ -31,8 +31,22 @@
         <td align="center" th:text="${msd.isActive()}">true</td>
     </tr>
 </table>
+<form action="/monitorNewStock"  th:object="${alarm}" method="post" align="right">
+    <select th:field="*{symbol}">
+        <option th:each="i : ${codes}" th:text="${i}" th:value="${i}">
+        </option>
+    </select>
+    <select th:field="*{priceType}">
+        <option th:each="i : ${priceTypes}" th:text="${i}" th:value="${i}">
+        </option>
+    </select>
+    <button type="submit">Add stock to monitor</button>
+</form>
+
 <br/>
 <br/>
+
+
 <h2 align="center">Your alarms:</h2>
 <table border="1" align="center">
     <tr>

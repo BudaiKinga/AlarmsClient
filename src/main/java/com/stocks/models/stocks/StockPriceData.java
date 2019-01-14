@@ -62,12 +62,10 @@ public class StockPriceData {
         }
     }
 
-    public double getOpen() {
-        return getPrice(PriceType.OPEN_PRICE);
-    }
-
     public double getPrice(PriceType priceType) {
-        return priceData.get(priceType);
+
+        Double price = priceData.get(priceType);
+        return price != null ? price : 0.0d;
     }
 
     @Override
@@ -80,4 +78,7 @@ public class StockPriceData {
                 '}';
     }
 
+    public void setPrice(PriceType priceType, double updatedPrice) {
+        priceData.put(priceType, updatedPrice);
+    }
 }

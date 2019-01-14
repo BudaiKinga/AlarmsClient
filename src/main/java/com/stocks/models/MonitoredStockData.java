@@ -5,26 +5,16 @@ import com.stocks.models.stocks.StockPriceData;
 
 public class MonitoredStockData {
 
-    StockPriceData initialPriceData;
     StockPriceData currentPriceData;
     Alarm alarm;
 
     public MonitoredStockData() {
+        currentPriceData = new StockPriceData();
     }
 
-    public MonitoredStockData(StockPriceData priceData, StockPriceData currentPriceData, Alarm alarm) {
-        this.initialPriceData = priceData;
+    public MonitoredStockData(StockPriceData currentPriceData, Alarm alarm) {
         this.currentPriceData = currentPriceData;
         this.alarm = alarm;
-    }
-
-    public StockPriceData getInitialPriceData() {
-
-        return initialPriceData;
-    }
-
-    public void setInitialPriceData(StockPriceData initialPriceData) {
-        this.initialPriceData = initialPriceData;
     }
 
     public Alarm getAlarm() {
@@ -44,7 +34,13 @@ public class MonitoredStockData {
     }
 
     public double getCurrentPrice() {
-        return currentPriceData.getPrice(PriceType.valueOf(alarm.getPriceType()));
+        String pt = alarm.getPriceType();
+        if (pt == null) {
+            System.out.println("no alarm set up");
+            return -1;
+        }
+        PriceType priceType = PriceType.valueOf(pt);
+        return currentPriceData.getPrice(priceType);
     }
 
     public double getCurrentVariance() {
@@ -67,5 +63,21 @@ public class MonitoredStockData {
 
     public String getSymbol() {
         return alarm.getSymbol();
+    }
+
+    public void setCurrentPrice(double updatedPrice) {
+        this.currentPriceData.setPrice(PriceType.valueOf(getPriceType()), updatedPrice);
+    }
+
+    public boolean targetValueReached() {
+        if (!alarm.isActive()) {
+            return false;
+        }
+        double currentPerc = getCurrentVariance();
+        double targetPerc = getTargetVariance();
+        if (targetPerc < 0) {
+            return currentPerc<=targetPerc;
+        }
+        return targetPerc<=currentPerc;
     }
 }
