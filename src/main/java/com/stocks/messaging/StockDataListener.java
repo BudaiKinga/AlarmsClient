@@ -3,6 +3,8 @@ package com.stocks.messaging;
 import com.stocks.models.stocks.Code;
 import com.stocks.models.stocks.StockPriceData;
 import com.stocks.service.IStockDataMsgListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.annotation.JmsListener;
@@ -28,21 +30,23 @@ public class StockDataListener {
 
     IStockDataMsgListener listener;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(StockDataListener.class);
+
     @JmsListener(destination = "${messaging.stockdata.subject}")
     public void receive(StockPriceData msg) {
-        System.out.println("Recieved Message: " + msg);
+        LOGGER.info("Recieved Message: " + msg);
         listener.msgReceived(msg);
     }
 
     public void subscribe(Set<Code> codes, IStockDataMsgListener listener) {
         this.listener = listener;
-        System.out.println("Sending to producer: " + codes);
+        LOGGER.info("Sending to producer: " + codes);
         jmsTemplate.convertAndSend(subscriberSubject, codes);
 
     }
 
     public void requestInitialPriceData(String s) {
-        System.out.println("Requesting " + s);
+        LOGGER.info("Requesting " + s);
         jmsTemplate.convertAndSend(initialPriceSubject, s);
         synchronized (listener) {
             try {
@@ -51,12 +55,11 @@ public class StockDataListener {
                 e.printStackTrace();
             }
         }
-        System.out.println("initial price received");
+        LOGGER.info("Initial price received for " + s);
     }
 
     @JmsListener(destination = "${messaging.init.subject}")
     public void receiveInitialPrice(StockPriceData msg) {
-        System.out.println("rec init: " + msg);
         synchronized (listener) {
             listener.setInitialPriceData(msg);
             listener.notify();

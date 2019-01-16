@@ -2,8 +2,12 @@ package com.stocks.models;
 
 import com.stocks.models.stocks.PriceType;
 import com.stocks.models.stocks.StockPriceData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MonitoredStockData {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MonitoredStockData.class);
 
     StockPriceData currentPriceData;
     Alarm alarm;
@@ -36,7 +40,7 @@ public class MonitoredStockData {
     public double getCurrentPrice() {
         String pt = alarm.getPriceType();
         if (pt == null) {
-            System.out.println("no alarm set up");
+            LOGGER.info("No alarm set up, adding empty monitored stock data");
             return -1;
         }
         PriceType priceType = PriceType.valueOf(pt);

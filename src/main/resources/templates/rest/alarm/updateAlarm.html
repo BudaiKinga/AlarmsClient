@@ -5,6 +5,9 @@
     <title>Index page</title>
 </head>
 <body>
+<form th:action="@{/logout}" method="post" align="right">
+    <button type="submit" value="logout">Log Out</button>
+</form>
 <h1 align="center">Edit your alarm</h1>
 <form action="#" th:action="@{/edit}" th:object="${alarm}" method="post">
     <div>
@@ -16,6 +19,10 @@
     </div>
     <div>
         <input th:field="*{creationTime}" th:value="*{creationTime}" readonly hidden/>
+    </div>
+    <div>
+        <label>Reference price</label>
+        <input th:field="*{referencePrice}" th:value="*{referencePrice}" readonly/>
     </div>
     <div>
         <label>Symbol</label>
@@ -44,9 +51,8 @@
     </form>
 </form>
 
+<p align="center">&copy; 2018 budai_kinga@yahoo.com<p>
 
-<form th:action="@{/logout}" method="post" align="right">
-    <button type="submit" value="logout">Log Out</button>
-</form>
+
 </body>
 </html>

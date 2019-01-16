@@ -3,35 +3,70 @@
 <head>
     <meta charset="ISO-8859-1">
     <title>Index page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
+<form th:action="@{/logout}" method="post" align="right">
+    <button type="submit" value="logout">Log Out</button>
+</form>
+
 <h1 align="center">Welcome <span th:text="${user}">user</span></h1>
 
+<div id="personTable"></div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    updateField();
 
-<h2 align="center">Monitored stocks:</h2>
-<table border="1" align="center">
-    <tr>
-        <th align="center">Symbol</th>
-        <th align="center">Price Type</th>
-        <th align="center">Initial price</th>
-        <th align="center">Current price</th>
-        <th align="center">Current variance(%)</th>
-        <th align="center">Target variance (%)</th>
-        <th align="center">Alarm name</th>
-        <th align="center">Active</th>
-    </tr>
-    <tr th:each="msd : ${stocks}">
-        <td align="center" th:text="${msd.getSymbol()}">name</td>
-        <td align="center" th:text="${msd.getPriceType()}">HIGH</td>
-        <td align="right" th:text="${msd.getInitialPrice()}">0.0</td>
-        <td align="right" th:text="${msd.getCurrentPrice()}">0.0</td>
-        <td align="right" th:text="${msd.getCurrentVariance()}">0.0</td>
-        <td align="right" th:text="${msd.getTargetVariance()}">0.0</td>
-        <td align="center" th:text="${msd.getAlarmName()}">0.0</td>
-        <td align="center" th:text="${msd.isActive()}">true</td>
-    </tr>
-</table>
-<form action="/monitorNewStock"  th:object="${alarm}" method="post" align="right">
+    function updateField() {
+        for (var i = 0; i < 100; i++) {
+            updater(i);
+        }
+    }
+
+    function updater(i) {
+        setTimeout(function () {
+            f(i);
+        }, i * 2000);
+    }
+
+    function f(i) {
+        $.ajax({
+            type: "GET",
+            url: "stockPoll",
+            success: function (data) {
+                var tablePlace = document.getElementById("personTable");
+                var htmlCode = "<table border=\"1\" align=\"center\">" +
+                    "<tr>" +
+                    "   <td>Symbol</td>" +
+                    "   <td>Price Type</td>" +
+                    "   <td>Initial Price</td>" +
+                    "   <td>Current Price</td>" +
+                    "   <td>Current Variance</td>" +
+                    "   <td>Target Variance</td>" +
+                    "   <td>Alarm Name</td>" +
+                    "   <td>Active</td>" +
+                    "</tr>";
+                $.each(data, function (j, item) {
+                    htmlCode += "<tr>" +
+                        "   <td>" + item.symbol + "</td>" +
+                        "   <td>" + item.alarm.priceType + "</td>" +
+                        "   <td>" + item.initialPrice + "</td>" +
+                        "   <td>" + item.currentPrice + "</td>" +
+                        "   <td>" + item.currentVariance + "</td>" +
+                        "   <td>" + item.targetVariance + "</td>" +
+                        "   <td>" + item.alarmName + "</td>" +
+                        "   <td>" + item.active + "</td>" +
+                        "</tr>";
+                });
+                htmlCode += "</table>";
+                tablePlace.innerHTML = htmlCode;
+            }
+        });
+    }
+    /*]]>*/
+</script>
+<br /><br />
+<form action="/monitorNewStock" th:object="${alarm}" method="post" align="center">
     <select th:field="*{symbol}">
         <option th:each="i : ${codes}" th:text="${i}" th:value="${i}">
         </option>
@@ -45,7 +80,6 @@
 
 <br/>
 <br/>
-
 
 <h2 align="center">Your alarms:</h2>
 <table border="1" align="center">
@@ -66,24 +100,22 @@
         <td th:text="${alarm.referencePrice}">NBCS</td>
         <td th:text="${alarm.targetPercentage}">15</td>
         <td th:text="${alarm.priceType}">15</td>
-        <td> <form method="POST" th:action="@{edit/{id}(id=${alarm.id})}">
-            <button type="submit" name="submit" value="value" class="link-button">Edit</button>
-        </form></td>
+        <td>
+            <form method="POST" th:action="@{edit/{id}(id=${alarm.id})}">
+                <button type="submit" name="submit" value="value" class="link-button">Edit</button>
+            </form>
+        </td>
         <td><a th:href="@{delete/{id}(id=${alarm.id})}">Delete</a></td>
     </tr>
 </table>
 
-
-
-<form th:action="@{/createAlarm}" method="post" align="right">
+<br /><br />
+<form th:action="@{/createAlarm}" method="post" align="center">
     <button type="submit">Create new Alarm</button>
 </form>
 
-<p th:text="${user}">Username</p>
-<a th:href="@{/login}">Log In</a>
+<p align="center">&copy; 2018 budai_kinga@yahoo.com<p>
 
-<form th:action="@{/logout}" method="post" align="right">
-    <button type="submit" value="logout">Log Out</button>
-</form>
+
 </body>
 </html>

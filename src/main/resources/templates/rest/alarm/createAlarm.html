@@ -5,6 +5,9 @@
     <title>Index page</title>
 </head>
 <body>
+<form th:action="@{/logout}" method="post" align="right">
+    <button type="submit" value="logout">Log Out</button>
+</form>
 <h1 align="center">Set up your alarm</h1>
 <form action="/saveAlarm" th:object="${alarm}" method="POST" enctype="utf8">
     <div>
@@ -36,5 +39,7 @@
 <form th:action="@{/cancel}" method="post" align="right">
     <button type="submit">Cancel</button>
 </form>
+<br /><br /><br />
+<p align="center">&copy; 2018 budai_kinga@yahoo.com<p>
 </body>
 </html>

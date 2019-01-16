@@ -85,7 +85,7 @@ public class AlarmController {
 
     @RequestMapping(value = "/createAlarm", method = RequestMethod.POST)
     public String getCreateAlarmForm(Model model) {
-        AlarmDTO alarm = new AlarmDTO();
+        Alarm alarm = new Alarm();
         model.addAttribute("alarm", alarm);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails details = (CustomUserDetails) authentication.getPrincipal();
