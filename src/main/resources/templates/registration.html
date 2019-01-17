@@ -2,51 +2,54 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <style>
+    h1 {color:#D0CDD7}
+    body {background-color:#416165}
+    td {color:#D9DBF1}
         <!--   D9DBF1,D0CDD7, ACB0BD,   416165,0B3948     -->
     </style>
 </head>
-<body bgcolor="#416165">
+<body >
 <h1 th:text="Register" align="center">form</h1>
 <form action="/registerUser" th:object="${user}" method="POST" enctype="utf8">
 
     <table align="center">
         <tr>
-            <td align="right" style="color:#D9DBF1"><b>First name</b></td>
+            <td align="right"><b>First name</b></td>
             <td>
                 <input type="text" th:field="*{name}"/>
             </td>
             <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
         </tr>
         <tr>
-            <td align="right">Last</td>
+            <td align="right"><b>Last name</b></td>
             <td>
                 <input type="text" th:field="*{lastName}"/>
             </td>
             <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">LastName Error</td>
         </tr>
         <tr>
-            <td align="right">E-mail</td>
+            <td align="right"><b>E-mail</b></td>
             <td>
                 <input type="email" th:field="*{email}"/>
             </td>
             <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</td>
         </tr>
         <tr>
-            <td align="right">Username</td>
+            <td align="right"><b>Username</b></td>
             <td>
                 <input type="text" th:field="*{userName}"/>
             </td>
             <td th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">UserName Error</td>
         </tr>
         <tr>
-            <td align="right">Password</td>
+            <td align="right"><b>Password</b></td>
             <td>
                 <input type="password" th:field="*{password}"/>
             </td>
             <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</td>
         </tr>
         <tr>
-            <td align="right">Confirm Password</td>
+            <td align="right"><b>Confirm Password</b></td>
             <td>
                 <input type="password" th:field="*{confirmPassword}"/>
             </td>
