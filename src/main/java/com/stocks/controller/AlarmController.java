@@ -1,6 +1,5 @@
 package com.stocks.controller;
 
-import com.stocks.dto.AlarmDTO;
 import com.stocks.models.Alarm;
 import com.stocks.models.CustomUserDetails;
 import com.stocks.models.MonitoredStockData;

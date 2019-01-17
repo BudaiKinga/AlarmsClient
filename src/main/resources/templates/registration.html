@@ -1,47 +1,52 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<body>
-<h1 th:text="Register">form</h1>
+<head>
+    <style>
+        <!--   D9DBF1,D0CDD7, ACB0BD,   416165,0B3948     -->
+    </style>
+</head>
+<body bgcolor="#416165">
+<h1 th:text="Register" align="center">form</h1>
 <form action="/registerUser" th:object="${user}" method="POST" enctype="utf8">
 
-    <table>
+    <table align="center">
         <tr>
-            <td>First</td>
+            <td align="right" style="color:#D9DBF1"><b>First name</b></td>
             <td>
                 <input type="text" th:field="*{name}"/>
             </td>
             <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
         </tr>
         <tr>
-            <td>Last</td>
+            <td align="right">Last</td>
             <td>
                 <input type="text" th:field="*{lastName}"/>
             </td>
             <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">LastName Error</td>
         </tr>
         <tr>
-            <td>E-mail</td>
+            <td align="right">E-mail</td>
             <td>
                 <input type="email" th:field="*{email}"/>
             </td>
             <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</td>
         </tr>
         <tr>
-            <td>Username</td>
+            <td align="right">Username</td>
             <td>
                 <input type="text" th:field="*{userName}"/>
             </td>
             <td th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">UserName Error</td>
         </tr>
         <tr>
-            <td>Password</td>
+            <td align="right">Password</td>
             <td>
                 <input type="password" th:field="*{password}"/>
             </td>
             <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</td>
         </tr>
         <tr>
-            <td>Confirm Password</td>
+            <td align="right">Confirm Password</td>
             <td>
                 <input type="password" th:field="*{confirmPassword}"/>
             </td>
@@ -49,8 +54,11 @@
                 th:text="${error}">Validation error</p></td>
         </tr>
     </table>
-    <button type="submit" th:text="Register">submit</button>
+    <div align="center">
+        <button type="submit" th:text="Register">Submit</button>
+    </div>
 </form>
+<br/>
 <form th:action="@{/cancel}" method="post" align="right">
     <button type="submit">Cancel</button>
 </form>
