@@ -3,11 +3,12 @@
 <head>
     <meta charset="ISO-8859-1">
     <title>Index page</title>
-        <style>
+    <style>
     h1 {color:#D0CDD7}
     body {background-color:#416165}
     label,p {color:#D9DBF1}
         <!--   D9DBF1,D0CDD7, ACB0BD,   416165,0B3948     -->
+
     </style>
 </head>
 <body>
@@ -15,11 +16,13 @@
     <button type="submit" value="logout">Log Out</button>
 </form>
 <h1 align="center">Set up your alarm</h1>
-<form action="/saveAlarm" th:object="${alarm}" method="POST" enctype="utf8">
+<table align="center"><tr><td>
+<form action="/saveAlarm" th:object="${alarm}" method="POST" enctype="utf8" >
     <div>
         <label>Alarm name</label>
         <input th:field="*{name}"/>
     </div>
+    <br/>
     <div>
         <label>Symbol</label>
         <select th:field="*{symbol}">
@@ -27,10 +30,12 @@
             </option>
         </select>
     </div>
+    <br/>
     <div>
         <label>Target percentage</label>
         <input th:field="*{targetPercentage}"/>
     </div>
+    <br/>
     <div>
         <label>PriceType</label>
         <select th:field="*{priceType}">
@@ -38,14 +43,17 @@
             </option>
         </select>
     </div>
+    <br/>
     <button type="submit" th:text="create">submit</button>
 </form>
+    <form th:action="@{/cancel}" method="post" align="right">
+        <button type="submit">Cancel</button>
+    </form>
+</td></tr></table>
 
 
-<form th:action="@{/cancel}" method="post" align="right">
-    <button type="submit">Cancel</button>
-</form>
-<br /><br /><br />
-<p align="center">&copy; 2018 budai_kinga@yahoo.com<p>
+<br/><br/><br/>
+<p align="center">&copy; 2018 budai_kinga@yahoo.com
+<p>
 </body>
 </html>

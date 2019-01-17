@@ -4,9 +4,11 @@ The system was developed in order to monitor stock data (from a predefined list)
 The system has two main components: AlarmsClient and AlarmsDataDispatcher. The communication between these two is done using asynchronous
 messaging via ActiveMQ. The messaging queue should be started before launching the two application. For more details:
 http://activemq.apache.org/installation.html
-The system uses MySQL to persist data, thus it is neccessary to have MySQL server launched.
+The system uses MySQL to persist data, thus it is neccessary to have MySQL server launched. The credentials should be configured in application.properties.
+The schema's name is "world". If it is not desired to create manually ensure that at first run the application.properties contains the
+ following: spring.jpa.hibernate.ddl-auto = create
 The mailing service should be configure in application.properties.
-The AlarmsDataDispatcher will send requests periodically (api key need to be configured in application.properties) based on a pre-configured time 
+The AlarmsDataDispatcher will send requests periodically (api key need to be configured in AlphaVantageConnector class) based on a pre-configured time
 property data.update.executor.rate in application.properties. No more than 500 calls per day are allowed and no more than 5 calls per minute are 
 allowed.
 
@@ -21,3 +23,6 @@ Define Alarm: after a successfull login (validations are performed) the user can
 Manage Alarms: the list of alarms are visible upon successfull login. The user can modify target percentage or name of an alarm. The user can also delete the alarm.
 
 Send e-mail notification: if the target variance is reached, based on credentials in application.propertes an email is sent with details to the user. After this the alarm becomes inactive.
+
+The worklog of development can be found at:
+https://docs.google.com/spreadsheets/d/1RuucS8c9tV8ihlFZIoq9GjmKJJl09Zx5MNPBNS6E0iI/edit?usp=sharing

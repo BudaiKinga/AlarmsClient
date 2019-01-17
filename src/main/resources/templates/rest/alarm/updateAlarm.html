@@ -15,11 +15,13 @@
     <button type="submit" value="logout">Log Out</button>
 </form>
 <h1 align="center">Edit your alarm</h1>
+<table align="center"><tr><td>
 <form action="#" th:action="@{/edit}" th:object="${alarm}" method="post">
     <div>
         <label>Alarm name</label>
         <input th:field="*{name}"/>
     </div>
+    <br/>
     <div>
         <input th:field="*{id}" th:value="*{id}" readonly hidden/>
     </div>
@@ -30,6 +32,7 @@
         <label>Reference price</label>
         <input th:field="*{referencePrice}" th:value="*{referencePrice}" readonly/>
     </div>
+    <br/>
     <div>
         <label>Symbol</label>
         <select th:field="*{symbol}">
@@ -37,10 +40,12 @@
             </option>
         </select>
     </div>
+    <br/>
     <div>
         <label>Target percentage:</label>
         <input th:field="*{targetPercentage}"/>
     </div>
+    <br/>
     <div>
         <label>Price type</label>
         <select th:field="*{priceType}">
@@ -48,6 +53,7 @@
             </option>
         </select>
     </div>
+    <br/>
     <div>
         <input th:field="*{active}" th:value="*{active}" readonly hidden/>
     </div>
@@ -56,7 +62,7 @@
         <button type="submit">Cancel</button>
     </form>
 </form>
-
+</td></tr></table>
 <p align="center">&copy; 2018 budai_kinga@yahoo.com<p>
 
 
