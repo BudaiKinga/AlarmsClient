@@ -11,6 +11,8 @@ The mailing service should be configure in application.properties.
 The AlarmsDataDispatcher will send requests periodically (api key need to be configured in AlphaVantageConnector class) based on a pre-configured time
 property data.update.executor.rate in application.properties. No more than 500 calls per day are allowed and no more than 5 calls per minute are 
 allowed.
+Messaging scheme:
+https://drive.google.com/file/d/1AcvnoNHRCRXLlRfZSERgE79RWIVgIiGy/view?usp=sharing
 
 Supported use cases:
 
