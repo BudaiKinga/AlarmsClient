@@ -4,6 +4,9 @@ The system was developed in order to monitor stock data (from a predefined list)
 The system has two main components: AlarmsClient and AlarmsDataDispatcher. The communication between these two is done using asynchronous
 messaging via ActiveMQ. The messaging queue should be started before launching the two application. For more details:
 http://activemq.apache.org/installation.html
+
+After installation of Active MQ, navigate to "bin" directory and type command: .\activemq.bat start
+
 The system uses MySQL to persist data, thus it is neccessary to have MySQL server launched. The credentials should be configured in application.properties.
 The schema's name is "world". If it is not desired to create manually ensure that at first run the application.properties contains the
  following: spring.jpa.hibernate.ddl-auto = create
